@@ -9,7 +9,7 @@ Pourquoi ?
 
 Cacador est né du besoin de mettre en ligne les photos prises lors d'événements (anniversaire, soirée ...)
 
-Ce script est basé sur (celui-ci)[https://github.com/gawen947/gallery]. Mon objectif est d'apprendre à faire un script « publiable » et utiliser git et github.
+Ce script est basé sur (https://github.com/gawen947/gallery)[celui-ci]. Mon objectif est d'apprendre à faire un script « publiable » et utiliser git et github.
 
 Pré-requis
 ------------
