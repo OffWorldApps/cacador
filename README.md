@@ -1,8 +1,7 @@
-
-Cacador
+cacador
 =============
 
-Cacador génère un album de photos à partir d'un dossier d'images.
+Cacador génère un album de photos à partir d'un dossier d'images avec le shell.
 Il suffit de télécharger le script `cacador`, le dossier exemples est un dossier d'images bien trop lourd que je devrais effacer
 
 Pourquoi ?
@@ -36,8 +35,3 @@ Versions
 0.1 : première version utilisable
 0.2 à venir : Travail sur le style de la page
 0.3 à venir : Utilisation de gabarits (templates)
-=======
-cacador
-=======
-
-Script pour créer des albums avec le shell
