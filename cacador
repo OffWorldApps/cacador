@@ -1,0 +1,143 @@
+#!/bin/bash
+# File: gallery.sh
+#  Time-stamp: <2012-12-26 02:08:13 gawen>
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+
+
+
+IMG_EXT="jpg jpeg png"
+
+
+output=Images
+extension=jpg
+tiny_size=160x
+normal_size=800x
+title="Les Photos !!!"
+quality=80
+
+tiny=petites
+normal=normales
+orig=originales
+
+
+output_tiny="$output/$tiny"
+output_orig="$output/$orig"
+output_normal="$output/$normal"
+output_html="$output/html"
+
+
+mkdir -p "$output"
+mkdir -p "$output_normal"
+mkdir -p "$output_tiny"
+mkdir -p "$output_orig"
+mkdir -p "$output_html"
+
+for ext in $IMG_EXT
+do
+    find_filter="$find_filter -iname \"*.$ext\" -o"
+done
+find_filter="$find_filter -false"
+# echo $find_filter
+# echo "find $1 $find_filter  | xargs echo"
+files=$(eval find $1 $find_filter  | xargs echo)
+#  echo ${files}
+cp $files $output_orig
+
+
+
+for img in `ls $output_orig`
+do
+  i=$((${i}+1))
+  liste[${i}]=$img
+done
+
+nombre_fichiers=$i
+echo $nombre_fichiers
+# echo `ls $1`
+j=0
+k=0
+l=0
+
+for img in `ls $output_orig`
+do
+  j=$(($j+1))
+#   echo $j
+#   echo $img
+#      convert  -quality $quality -resize $normal_size $output_orig/$img $output_normal/${img}_n.$extension
+#     convert  -quality $quality -resize $tiny_size $output_normal/${img}_n.$extension $output_tiny/${img}_p.$extension
+  taille=`ls -lh  $output_orig/$img | cut -d " " -f5`
+  if [ $j -gt 1 ]
+    then
+    k=$(($j-1))
+#     echo $k
+    img_previous=${liste[$k]}
+#     echo $img_previous
+      link_previous="<a href=\"${img_previous}.html\"><img alt=\"Image précédente : $img_previous \" src=\"../$tiny/${img_previous}_p.$extension\"/></a>"
+      echo $link_previous
+   fi 
+  
+  if [ $j -lt $nombre_fichiers ]
+    then
+      l=$(($j+1))
+      img_next=${liste[$l]}
+      link_next="<a href=\"${img_next}.html\"><img alt=\"Image suivante : $img_next \" src=\"../$tiny/${img_next}_p.$extension\"/></a>"
+    else
+      unset link_next
+  fi  
+    
+  
+cat <<EOF>"$output_html/$img.html"  
+<html>
+  <head>
+    <title>$title</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  </head>
+  
+  <body>
+  <h1>$title</h1>
+  <p><img alt="Image $img " src="../$normal/${img}_n.$extension"/>
+ <p>$link_previous
+  -
+  $link_next</p>
+  <p>Télécharger l'image originale : <a href="../$orig/$img">$img ($taille)</a></p>
+  <p>Toutes les <a href="../index.html">images</a></p>
+  </body>
+</html>
+EOF
+
+done
+
+
+index="$output/index.html"
+echo "<html>" > "$index"
+echo "<head>" >> "$index"
+echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />" >> "$index"
+# echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"style.css\">" >> "$index"
+echo "  <link rel=\"shortcut icon\" type=\"image/png\" href=\"favicon.png\">" >> "$index"
+echo "  <title>$title</title>" >> "$index"
+echo "</head>" >> "$index"
+echo "<body>" >> "$index"
+# echo "  <center>" >> "$index"
+echo "  <h1>$title</h1>" >> "$index"
+
+for img in `ls  $output_orig`
+do
+echo "  <a href=\"html/${img}.html\"><img alt=\"$img \" src=\"../$output_tiny/${img}_p.$extension\"/></a>" >> "$index"
+
+done 
+
+echo "</body>" >> "$index"
+echo "</html>" >> "$index"
