@@ -1,8 +1,9 @@
-<<<<<<< HEAD
+
 Cacador
 =============
 
 Cacador génère un album de photos à partir d'un dossier d'images.
+Il suffit de télécharger le script `cacador`, le dossier exemples est un dossier d'images bien trop lourd que je devrais effacer
 
 Pourquoi ?
 ----------
@@ -33,10 +34,10 @@ Cacador est une section (quartier) de Capesterre-Belle-Eau, la ville où j'habit
 Versions
 --------
 0.1 : première version utilisable
-
+0.2 à venir : Travail sur le style de la page
+0.3 à venir : Utilisation de gabarits (templates)
 =======
 cacador
 =======
 
 Script pour créer des albums avec le shell
->>>>>>> b07fa5c9df225fab99b0c17bfcbc297a8372f940
