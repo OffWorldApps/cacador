@@ -19,7 +19,9 @@ ImageMagick
 Usage
 -----
 
-`./cacador DossierImages/`
+`cacador DossierImages/` pour la génération simple
+
+`cacador -T "Autre titre" -S x480  DossierImages/` pour donner un autre titre aux pages et que la hauteur des images moyennes soit de 480 pixels.
 
 
 
@@ -33,5 +35,5 @@ Cacador est une section (quartier) de Capesterre-Belle-Eau, la ville où j'habit
 Versions
 --------
 0.1 : première version utilisable
-0.2 à venir : Travail sur le style de la page
+0.2  : Travail sur le style de la page et premières options
 0.3 à venir : Utilisation de gabarits (templates)
