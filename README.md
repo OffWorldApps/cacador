@@ -35,5 +35,7 @@ Cacador est une section (quartier) de Capesterre-Belle-Eau, la ville où j'habit
 Versions
 --------
 0.1 : première version utilisable
+
 0.2  : Travail sur le style de la page et premières options
+
 0.3 à venir : Utilisation de gabarits (templates)
