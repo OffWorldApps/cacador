@@ -55,7 +55,7 @@ output_orig="$output/$orig"
 output_normal="$output/$normal"
 output_html="$output/html"
 
-while getopts "hVS:HT:t:" Option
+while getopts "hVs:HT:t:o" Option
 
 
 do
@@ -66,13 +66,15 @@ do
     V)	echo "Cacador v0.2 by OffWorlApps : https://github.com/OffWorldApps/ "
 	exit 0
 	;;
-    S ) normal_size=$OPTARG
+    s ) normal_size=$OPTARG
       ;;
     H) html=1
     ;;
     T) title=$OPTARG
     ;;
     t) template=$OPTARG
+    ;;
+    o) output=$OPTARG
     ;;
   esac
 done
@@ -161,7 +163,8 @@ done
 
 
 index="$output/index.html"
-echo "<html>" > "$index"
+echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">" > "$index"
+echo "<html>" >> "$index"
 echo "<head>" >> "$index"
 echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />" >> "$index"
 echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"html/style.css\">" >> "$index"
