@@ -181,7 +181,7 @@ echo "<!DOCTYPE html>" > $index
 >>>>>>> ed020e9f7dd6b8aeaad48b8b9875377937bf32e3
 echo "<html>" >> "$index"
 echo "<head>" >> "$index"
-echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\" />" >> "$index"
+echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">" >> "$index"
 echo "  <link rel=\"stylesheet\" type=\"text/css\" href=\"html/style.css\">" >> "$index"
 echo "  <link rel=\"shortcut icon\" type=\"image/png\" href=\"favicon.png\">" >> "$index"
 echo "  <title>$title</title>" >> "$index"
@@ -192,7 +192,7 @@ echo "  <h1>$title</h1>" >> "$index"
 
 for img in `ls  $output_orig`
 do
-echo "  <a href=\"html/${img}.html\"><img alt=\"$img \" src=\"$tiny/${img}_p.$extension\"/></a>" >> "$index"
+echo "  <a href=\"html/${img}.html\"><img alt=\"$img \" src=\"$tiny/${img}_p.$extension\"></a>" >> "$index"
 
 done 
 
