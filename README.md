@@ -16,6 +16,7 @@ Pré-requis
 ImageMagick
 
 
+
 Usage
 -----
 
@@ -39,3 +40,9 @@ Versions
 0.2  : Travail sur le style de la page et premières options
 
 0.3 à venir : Utilisation de gabarits (templates)
+
+- ☑ Mise en place des options
+- ☑ 
+- ☑ 
+- ☐ utilisation des gabarits
+- ☐ Mise en place du FTP

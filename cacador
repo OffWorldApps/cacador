@@ -113,54 +113,49 @@ j=0
 k=0
 l=0
 
+
+
+
 for img in `ls $output_orig`
 do
+  image=$img
   j=$(($j+1))
 
-  echo $img
-   if [ $html -ne 1 ]
+  echo "Traitement de l'image : $img"
+  
+#   Conversion des images
+  if [ $html -ne 1 ]
     then
       convert  -quality $quality   -auto-orient -resize $normal_size $output_orig/$img $output_normal/${img}_n.$extension
       convert  -quality $quality -auto-orient  -resize $tiny_size   $output_normal/${img}_n.$extension $output_tiny/${img}_p.$extension
    fi
-  taille=`ls -lh  $output_orig/$img | cut -d " " -f5`
+   
+#  Taille des images à télécharger  
+  size=`ls -lh  $output_orig/$img | cut -d " " -f5`
   if [ $j -gt 1 ]
     then
     k=$(($j-1))
     img_previous=${liste[$k]}
-    link_previous="<a href=\"${img_previous}.html\"><img alt=\"Image précédente : $img_previous \" src=\"../$tiny/${img_previous}_p.$extension\"/></a>"
+    link_previous="<a href=\"${img_previous}.html\"><img alt=\"$img_previous \" src=\"../$tiny/${img_previous}_p.$extension\" ></a>"
   fi 
   
   if [ $j -lt $nombre_fichiers ]
     then
       l=$(($j+1))
       img_next=${liste[$l]}
-      link_next="<a href=\"${img_next}.html\"><img alt=\"Image suivante : $img_next \" src=\"../$tiny/${img_next}_p.$extension\"/></a>"
+      link_next="<a href=\"${img_next}.html\"><img alt=\"$img_next \" src=\"../$tiny/${img_next}_p.$extension\" ></a>"
     else
       unset link_next
   fi  
-    
+
+#   Lien vers l'image originale
+  image_original_link="<a href=\"../$orig/$img\">$img (${size}o)</a>"
   
-cat <<EOF>"$output_html/$img.html"  
-<html>
-  <head>
-    <title>$title</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  </head>
+
   
-  <body>
-  <h1>$title</h1>
-  <p><img alt="Image $img " src="../$normal/${img}_n.$extension"/>
- <p>$link_previous
-  -
-  $link_next</p>
-  <p>Télécharger l'image originale : <a href="../$orig/$img">$img (${taille}o)</a></p>
-  <p>Toutes les <a href="../index.html">images</a></p>
-  <p>Ce dossier de photos est destiné à un usage privé, il sera donc bientôt effacé.</p>
-</body>
-</html>
-EOF
+  
+  export title image_original_link image normal link_next link_previous extension;
+  envsubst < templates/$template/img.html >$output_html/$img.html
 
 done
 
