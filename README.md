@@ -2,7 +2,7 @@ cacador
 =============
 
 Cacador génère un album de photos à partir d'un dossier d'images avec le shell.
-Il suffit de télécharger le script `cacador`, le dossier exemples est un dossier d'images bien trop lourd que je devrais effacer
+Il suffit de télécharger le script `cacador`, le dossier exemple est un dossier d'images bien trop lourd que je devrais effacer
 
 Pourquoi ?
 ----------
@@ -16,13 +16,19 @@ Pré-requis
 ImageMagick
 
 
-
-Usage
------
+Utilisation
+-----------
 
 `cacador DossierImages/` pour la génération simple
 
 `cacador -T "Autre titre" -S x480  DossierImages/` pour donner un autre titre aux pages et que la hauteur des images moyennes soit de 480 pixels.
+
+Documentation
+-------------
+`cacador` est publié en version 0.99.
+
+Il est considéré comme terminé et l'objectif est de corriger les éventuels bugs ainsi que de rédiger une courte documentation
+
 
 
 
@@ -30,19 +36,3 @@ Usage
 ---------------
 Cacador est une section (quartier) de Capesterre-Belle-Eau, la ville où j'habite.
 
-
-
-
-Versions
---------
-0.1 : première version utilisable
-
-0.2  : Travail sur le style de la page et premières options
-
-0.3 à venir : Utilisation de gabarits (templates)
-
-- ☑ Mise en place des options
-- ☑ 
-- ☑ 
-- ☐ utilisation des gabarits
-- ☐ Mise en place du FTP
