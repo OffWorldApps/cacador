@@ -14,7 +14,7 @@
 #  You should have received a copy of the GNU General Public License
 #   along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-
+#  set -xv
 
 IMG_EXT="jpg jpeg png"
 
@@ -64,7 +64,7 @@ do
     h) 	help
 	exit 0
 	;;
-    V)	echo "Cacador v0.99 by OffWorlApps : https://github.com/OffWorldApps/ "
+    V)	echo "Cacador v0.999 by OffWorldApps : https://github.com/OffWorldApps/ "
 	exit 0
 	;;
     s ) normal_size=$OPTARG
@@ -81,78 +81,79 @@ do
 done
 shift $(($OPTIND - 1))
 
-# echo $normal_size
+directory=$1
 
-if [ -e "$1" ]
-  then
-
-
+main() (
+# echo $1
+# echo $directory
+# exit 0
+#Création des dossiers de sortie
 mkdir -p "$output"
 mkdir -p "$output_normal"
 mkdir -p "$output_tiny"
 mkdir -p "$output_orig"
 mkdir -p "$output_html"
+#Création de la feuille de style
+cp $stylesheet $output_html
 
+#Liste les images suivants les extensions possibles 
 for ext in $IMG_EXT
-do
+  do
     find_filter="$find_filter -iname \"*.$ext\" -o"
-done
+  done
+
 find_filter="$find_filter -false"
+files=$(eval find $directory $find_filter  | xargs echo)
 
+# echo $files
+# exit 0
 
-files=$(eval find $1 $find_filter  | xargs echo)
+  cp $files $output_orig
 
-cp $files $output_orig
-
-
-
-for img in `ls $output_orig`
-do
-  i=$((${i}+1))
-  liste[${i}]=$img
-done
-
-nombre_fichiers=$i
-echo "$nombre_fichiers images"
-
-j=0
-k=0
-l=0
-
-
-
-
-for img in `ls $output_orig`
-do
-  image=$img
-  j=$(($j+1))
-
-  echo "Traitement de l'image : $img"
+  for img in `ls $output_orig`
+    do
+      i=$((${i}+1))
+      liste[${i}]=$img
+    done
   
-#   Conversion des images
-  if [ $html -ne 1 ]
-    then
-      convert  -quality $quality   -auto-orient -resize $normal_size $output_orig/$img $output_normal/${img}_n.$extension
-      convert  -quality $quality -auto-orient  -resize $tiny_size   $output_normal/${img}_n.$extension $output_tiny/${img}_p.$extension
-   fi
-   
-#  Taille des images à télécharger  
-  size=`ls -lh  $output_orig/$img | cut -d " " -f5`
-  if [ $j -gt 1 ]
-    then
-    k=$(($j-1))
-    img_previous=${liste[$k]}
-    link_previous="<a href=\"${img_previous}.html\"><img alt=\"$img_previous \" src=\"../$tiny/${img_previous}_p.$extension\" ></a>"
-  fi 
+  nombre_fichiers=$i
+  echo "$nombre_fichiers images"
   
-  if [ $j -lt $nombre_fichiers ]
-    then
-      l=$(($j+1))
-      img_next=${liste[$l]}
-      link_next="<a href=\"${img_next}.html\"><img alt=\"$img_next \" src=\"../$tiny/${img_next}_p.$extension\" ></a>"
-    else
-      unset link_next
-  fi  
+  j=0
+  k=0
+  l=0
+  
+  for img in `ls $output_orig`
+    do
+      image=$img
+      j=$(($j+1))
+      echo "Traitement de l'image : $img"
+      
+      #   Conversion des images
+      if [ $html -ne 1 ]
+	then
+	  convert  -quality $quality   -auto-orient -resize $normal_size $output_orig/$img $output_normal/${img}_n.$extension
+	  convert  -quality $quality -auto-orient  -resize $tiny_size   $output_normal/${img}_n.$extension $output_tiny/${img}_p.$extension
+      fi
+
+      #  Taille des images à télécharger  
+      size=`ls -lh  $output_orig/$img | cut -d " " -f5`
+      
+      if [ $j -gt 1 ]
+	then
+	  k=$(($j-1))
+	  img_previous=${liste[$k]}
+	  link_previous="<a href=\"${img_previous}.html\"><img alt=\"$img_previous \" src=\"../$tiny/${img_previous}_p.$extension\" ></a>"
+      fi 
+  
+      if [ $j -lt $nombre_fichiers ]
+	then
+	  l=$(($j+1))
+	  img_next=${liste[$l]}
+	  link_next="<a href=\"${img_next}.html\"><img alt=\"$img_next \" src=\"../$tiny/${img_next}_p.$extension\" ></a>"
+	else
+	  unset link_next
+      fi
 
 #   Lien vers l'image originale
   image_original_link="<a href=\"../$orig/$img\">$img (${size}o)</a>"
@@ -176,10 +177,13 @@ for img in `ls  $output_orig`
   export image_links img tiny
   envsubst < templates/$template/index.html >$output/index.html
 
-cp $stylesheet $output_html
 
-else
-usage
-exit 0
+)
+
+if [ -d "$1" ]
+  then
+  main
+  else
+  usage
+  exit 0
 fi
-# done

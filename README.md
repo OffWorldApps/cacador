@@ -25,7 +25,7 @@ Utilisation
 
 Documentation
 -------------
-`cacador` est publié en version 0.99.
+`cacador` est publié en version 0.999.
 
 Il est considéré comme terminé et l'objectif est de corriger les éventuels bugs ainsi que de rédiger une courte documentation
 
